@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeuse Saint-Valentin 🥰</title>
+    <style>
+    /* Arrière-plan romantique */
+body {
+    background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Conteneur principal */
+.container {
+    max-width: 600px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 1s ease-in-out;
+}
+
+/* Texte lumineux */
+.glow {
+    font-size: 2em;
+    text-shadow: 0px 0px 10px #fff, 0px 0px 20px #ff4081, 0px 0px 30px #ff4081;
+}
+
+/* Compte à rebours stylé */
+#countdown {
+    font-size: 2em;
+    font-weight: bold;
+    color: #fffb;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* Cœurs animés */
+@keyframes float {
+    0% { transform: translateY(0px); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+.heart {
+    position: absolute;
+    color: red;
+    font-size: 24px;
+    opacity: 0.8;
+    animation: float 6s infinite linear;
+}
+
+/* Transition douce */
+.hidden {
+    display: none;
+    opacity: 0;
+}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Message d'attente avant le 14 février -->
+        <div id="waiting-message">
+            <h1 class="glow">Patience ma chérie 🥰...</h1>
+            <p>Un beau message t’attend pour la Saint-Valentin !</p>
+            <h2>Qui est dans :</h2>
+            <div id="countdown"></div>
+        </div>
+
+        <!-- Message spécial pour la Saint-Valentin -->
+        <div id="valentine-message" class="hidden">
+            <h1 class="glow">Joyeuse Saint-Valentin ma chérie 🥰 !</h1>
+            <p>Aujourd’hui est un jour spécial, et je voulais en profiter pour te rappeler à quel point tu es précieuse à mes yeux.  
+            Que cette journée soit remplie d’amour, de bonheur et de sourires ! 🥰❤️</p>
+        </div>
+    </div>
+
+    <!-- Musique de fond -->
+    <audio id="background-music" loop autoplay>
+        <source src="musique.m4a" type="audio/m4a">
+    </audio>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    let today = new Date();
+    let valentineDate = new Date(today.getFullYear(), 1, 14, 0, 0, 0); // 14 février à minuit
+
+    function updateCountdown() {
+        let now = new Date();
+        let timeDiff = valentineDate - now;
+
+        if (timeDiff > 0) {
+            let days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML =
+                `${days}j ${hours}h ${minutes}m ${seconds}s`;
+        } else {
+            document.getElementById("waiting-message").style.display = "none";
+            document.getElementById("valentine-message").classList.remove("hidden");
+            document.getElementById("valentine-message").style.opacity = "1";
+        }
+    }
+
+    // Mettre à jour le compte à rebours chaque seconde
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Ajouter des cœurs animés en continu
+    function createHeart() {
+        let heart = document.createElement("div");
+        heart.innerHTML = "❤️";
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = Math.random() * 4 + 2 + "s";
+        heart.style.fontSize = Math.random() * 20 + 20 + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }
+    setInterval(createHeart, 300);
+});
+    </script>
+</body>
+</html>
